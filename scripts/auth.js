@@ -1,3 +1,12 @@
+// !Listining for auth status change
+auth.onAuthStateChanged(user => {
+    if(user) {
+        console.log("user Logged in " , user.email);
+    }
+    else {
+        console.log("user Logged out");
+    }
+})
 const singUpForm = document.querySelector('#signup-form');
 singUpForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -20,10 +29,8 @@ singUpForm.addEventListener('submit', (e) => {
 const logout = document.querySelector('#logout');
 logout.addEventListener('click',(e) => {
     e.preventDefault();
-    auth.signOut().then(() => {
-        console.log('user logged out');
-    })
-})
+    auth.signOut();
+});
 
 // !Loging User in 
 const loginForm = document.querySelector('#login-form');
@@ -35,7 +42,6 @@ loginForm.addEventListener('submit', (e) => {
 
     // Login Method
     auth.signInWithEmailAndPassword(email, password).then(cred => {
-        console.log(cred.user);
         const modal = document.querySelector('#modal-login');
         loginForm.reset();
         M.Modal.getInstance(modal).close();
