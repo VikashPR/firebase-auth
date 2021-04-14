@@ -1,14 +1,17 @@
 // *get DB collecions 
-db.collection('guides').get().then(snapshot => {
-    setupGuides(snapshot.docs)
-})
+
 // !Listining for auth status change
 auth.onAuthStateChanged(user => {
     if(user) {
-        console.log("user Logged in " , user.email);
+        db.collection('guides').get().then(snapshot => {
+            setupGuides(snapshot.docs);
+            //  Setup Nav bar   
+            setupUI(user);
+        })
     }
     else {
-        console.log("user Logged out");
+        setupUI();
+        setupGuides([]);
     }
 })
 const singUpForm = document.querySelector('#signup-form');
